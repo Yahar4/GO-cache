@@ -9,7 +9,7 @@ import (
 type CacheItem struct {
 	// мы можем хранить любое значение, поэтому нам нужен тип interface
 	Value interface{}
-	// Время создания кэша
+	// время создания кэша
 	CreatedAt time.Time
 	// истечение времени для кэша, unix
 	Expiration int64
@@ -28,6 +28,7 @@ type CacheMethods interface {
 	Set(key string, value interface{}, duration time.Duration)
 	Get(key string) (interface{}, bool)
 	Delete(key string) error
+	Count() int64
 }
 
 // конструктор

@@ -63,3 +63,12 @@ func (c *Cache) Delete(key string) error {
 
 	return nil
 }
+
+func (c *Cache) Count() int64 {
+	c.RLock()
+	defer c.RUnlock()
+
+	numberOfItems := len(c.items)
+
+	return int64(numberOfItems)
+}
