@@ -89,3 +89,23 @@ func (c *Cache) Count() int64 {
 
 	return int64(numberOfItems)
 }
+
+func (c *Cache) RenameKey(oldKey, newKey string) error {
+	c.Lock()
+	defer c.Unlock()
+
+	// проверка существования ключа -> если существует, то меняем его и удаляем старый
+	if item, exists := c.items[oldKey]; exists {
+		// обработка случая, если наш новый ключ уже существует
+		if _, exists := c.items[newKey]; exists {
+			return errors.New("new key already exists in your cache")
+		}
+
+		c.items[newKey] = item
+		delete(c.items, oldKey)
+	} else {
+		return errors.New("no such key in cache")
+	}
+
+	return nil
+}
