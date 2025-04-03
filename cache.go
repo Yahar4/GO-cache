@@ -27,8 +27,24 @@ func (c *Cache) Set(key string, val interface{}, duration time.Duration) {
 	}
 }
 
-// получение значений из хранилища
-func (c *Cache) Get(key string) (interface{}, bool) {
+// получение всех значений из кэша
+func (c *Cache) GetAllItems() map[string]interface{} {
+	c.RLock()
+	defer c.RUnlock()
+
+	allItems := make(map[string]interface{})
+
+	for key, item := range c.items {
+		if time.Now().UnixNano() < item.Expiration {
+			allItems[key] = item.Value
+		}
+	}
+
+	return allItems
+}
+
+// получение конкретного значения по ключу
+func (c *Cache) GetItem(key string) (interface{}, bool) {
 	c.RLock()
 	defer c.RUnlock()
 
@@ -39,7 +55,7 @@ func (c *Cache) Get(key string) (interface{}, bool) {
 		return nil, false
 	}
 
-	// проверка на то, не истекли ли наши данные
+	// проверка на то, ликвидны ли наши данные
 	if item.Expiration > 0 {
 		if time.Now().UnixNano() > item.Expiration {
 			return nil, false
@@ -64,6 +80,7 @@ func (c *Cache) Delete(key string) error {
 	return nil
 }
 
+// подсчет кол-ва элементов в кэше
 func (c *Cache) Count() int64 {
 	c.RLock()
 	defer c.RUnlock()

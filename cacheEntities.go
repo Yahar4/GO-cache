@@ -26,8 +26,12 @@ type Cache struct {
 
 type CacheMethods interface {
 	Set(key string, value interface{}, duration time.Duration)
-	Get(key string) (interface{}, bool)
+
+	GetAllItems() map[string]interface{}
+	GetItem(key string) (interface{}, bool)
+
 	Delete(key string) error
+
 	Count() int64
 }
 
