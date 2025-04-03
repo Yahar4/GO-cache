@@ -7,7 +7,6 @@
 
 ## Установка
 
-Для установки пакета выполните:
 
 ```bash
 go get github.com/Yahar4/GO-cache
