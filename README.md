@@ -9,4 +9,4 @@
 
 
 ```bash
-go get github.com/Yahar4/GO-cache
+go get -u github.com/Yahar4/GO-cache
