@@ -70,6 +70,7 @@ func (c *Cache) GC() {
 	}
 }
 
+// -----
 // просроченные ключи
 func (c *Cache) expiredKeys() (keys []string) {
 	c.RLock()
