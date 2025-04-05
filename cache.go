@@ -109,3 +109,19 @@ func (c *Cache) RenameKey(oldKey, newKey string) error {
 
 	return nil
 }
+
+// функция для копирования элемента
+// TODO: написать ее
+// func (c *Cache) Copy(key string) (interface{}, bool) {
+//
+// }
+
+// функция для проверки существования элемента в кэше
+func (c *Cache) Exist(key string) bool {
+	c.RLock()
+	defer c.Unlock()
+
+	_, exists := c.items[key]
+
+	return exists
+}

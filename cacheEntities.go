@@ -31,6 +31,8 @@ type CacheMethods interface {
 	Delete(key string) error
 	Count() int64
 	RenameKey(oldKey, newKey string) error
+	Copy(key string) (interface{}, bool)
+	Exist(key string) bool
 }
 
 // конструктор
@@ -70,7 +72,6 @@ func (c *Cache) GC() {
 	}
 }
 
-// -----
 // просроченные ключи
 func (c *Cache) expiredKeys() (keys []string) {
 	c.RLock()
