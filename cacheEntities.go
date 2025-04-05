@@ -32,7 +32,9 @@ type CacheMethods interface {
 	Count() int64
 	RenameKey(oldKey, newKey string) error
 	Copy(key string) (interface{}, bool)
+	Increment(key string, number int64) error
 	Exist(key string) bool
+	FlushAll()
 }
 
 // конструктор
