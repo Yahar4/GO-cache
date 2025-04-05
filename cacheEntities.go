@@ -44,8 +44,51 @@ func New(deafultExpiration, cleanupInterval time.Duration) *Cache {
 	}
 
 	if cleanupInterval > 0 {
-		// TODO: прописать удаление устаревших элементов
+		cache.StartGC()
 	}
 
 	return &cache
+}
+
+// сборка мусора
+func (c *Cache) StartGC() {
+	go c.GC()
+}
+
+func (c *Cache) GC() {
+	for {
+		<-time.After(c.cleanupInterval)
+
+		if c.items == nil {
+			return
+		}
+
+		if keys := c.expiredKeys(); len(keys) == 0 {
+			c.clearItems(keys)
+		}
+	}
+}
+
+// просроченные ключи
+func (c *Cache) expiredKeys() (keys []string) {
+	c.RLock()
+	defer c.Unlock()
+
+	for k, i := range c.items {
+		if time.Now().UnixNano() > i.Expiration && i.Expiration > 0 {
+			keys = append(keys, k)
+		}
+	}
+
+	return
+}
+
+// убираем просроченные элементы
+func (c *Cache) clearItems(keys []string) {
+	c.Lock()
+	defer c.Unlock()
+
+	for _, k := range keys {
+		delete(c.items, k)
+	}
 }
