@@ -10,3 +10,23 @@
 
 ```bash
 go get -u github.com/Yahar4/GO-cache
+```
+
+## Пример использования
+```go
+import (
+	"github.com/Yahar4/GO-cache"
+)
+
+func main() {
+	// создание кэша с дефолтным временем хранения
+	// и временем удаления раз в 10 минут
+	c := cache.New(5*time.Minute, 10*time.Minute)
+
+	// установка значений в кэш по ключу "foo"
+	c.Set("foo", "bar", cache.DefaultExpiration)
+
+	// получение значения из кэша по ключу
+	value := c.Get("foo")
+}j
+```
