@@ -50,11 +50,12 @@ func New(deafultExpiration, cleanupInterval time.Duration) *Cache {
 	return &cache
 }
 
-// сборка мусора
+// инициализация сборки мусора
 func (c *Cache) StartGC() {
 	go c.GC()
 }
 
+// сборка мусора
 func (c *Cache) GC() {
 	for {
 		<-time.After(c.cleanupInterval)
