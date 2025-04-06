@@ -24,7 +24,7 @@ func main() {
 	c := cache.New(5*time.Minute, 10*time.Minute)
 
 	// установка значений в кэш по ключу "foo"
-	c.Set("foo", "bar", cache.DefaultExpiration)
+	c.Set("foo", "bar", 5*time.Minute)
 
 	// получение значения из кэша по ключу
 	value := c.Get("foo")
