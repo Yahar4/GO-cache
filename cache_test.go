@@ -110,3 +110,27 @@ func TestCache_GetItem_Expired(t *testing.T) {
 		t.Error("Expected key1 to be expired")
 	}
 }
+
+func TestCache_Increment(t *testing.T) {
+	cache := New(0, 0)
+
+	cache.Set("key1", int64(10), 0)
+	err := cache.Increment("key1", 5)
+	if err != nil {
+		t.Errorf("Expected no error, got %v", err)
+	}
+
+	val, _ := cache.GetItem("key1")
+	if val != int64(15) {
+		t.Errorf("Expected value 15, got %v", val)
+	}
+}
+
+func TestCache_IncrementNonExistentKey(t *testing.T) {
+	cache := New(0, 0)
+
+	err := cache.Increment("non-existent", int64(5))
+	if err == nil || err.Error() != "element to increment not found" {
+		t.Errorf("expected 'element to increment not found' error, got %v", err)
+	}
+}
