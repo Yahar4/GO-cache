@@ -134,3 +134,13 @@ func TestCache_IncrementNonExistentKey(t *testing.T) {
 		t.Errorf("expected 'element to increment not found' error, got %v", err)
 	}
 }
+
+func TestCache_IncrementNonIntData(t *testing.T) {
+	cache := New(0, 0)
+
+	cache.Set("key1", "value1", 0)
+	err := cache.Increment("key1", "1")
+	if err == nil {
+		t.Errorf("expected error, got %v", err)
+	}
+}
