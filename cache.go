@@ -146,7 +146,7 @@ func (c *Cache) Increment(key string, number int64) error {
 		val.Value = val.Value.(float64) + float64(number)
 	default:
 		c.Unlock()
-		return errors.New("the value is not and integer/float")
+		return errors.New("the value is not an integer/float")
 	}
 
 	c.items[key] = val
