@@ -1,5 +1,6 @@
 # GO-cache 🚀
 
+![testing](https://github.com/gorilla/mux/actions/workflows/test.yml/badge.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Yahar4/GO-cache.svg)](https://pkg.go.dev/github.com/Yahar4/GO-cache)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Yahar4/GO-cache/blob/main/LICENSE)
 

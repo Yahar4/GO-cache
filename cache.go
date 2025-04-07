@@ -110,6 +110,8 @@ func (c *Cache) RenameKey(oldKey, newKey string) error {
 	return nil
 }
 
+// Увеличение элемента на number
+// зависит от типа данных значения в кэше
 func (c *Cache) Increment(key string, number int64) error {
 	c.Lock()
 	val, found := c.items[key]
@@ -119,6 +121,8 @@ func (c *Cache) Increment(key string, number int64) error {
 		return errors.New("element to increment not found")
 	}
 
+	// проверка значений в кэше и преобразование значения для
+	// корректного инкремента
 	switch val.Value.(type) {
 	case int:
 		val.Value = val.Value.(int) + int(number)
