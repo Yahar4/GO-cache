@@ -140,7 +140,7 @@ func TestCache_IncrementNonIntData(t *testing.T) {
 
 	cache.Set("key1", "value1", 0)
 	err := cache.Increment("key1", "1")
-	if err == nil {
+	if err == nil || err.Error() != "the value is not an integer/float" {
 		t.Errorf("expected error, got %v", err)
 	}
 }
