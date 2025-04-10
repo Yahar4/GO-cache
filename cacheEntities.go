@@ -32,6 +32,7 @@ type CacheMethods interface {
 	Count() int64
 	RenameKey(oldKey, newKey string) error
 	Increment(key string, number int64) error
+	Decrement(key string, number int64) error
 	Exist(key string) bool
 	FlushAll()
 }
