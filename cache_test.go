@@ -135,12 +135,12 @@ func TestCache_IncrementNonExistentKey(t *testing.T) {
 	}
 }
 
-func TestCache_IncrementNonIntData(t *testing.T) {
+func TestCache_IncrementNotInt(t *testing.T) {
 	cache := New(0, 0)
 
 	cache.Set("key1", "value1", 0)
 	err := cache.Increment("key1", int64(10))
 	if err == nil || err.Error() != "the value is not an integer/float" {
-		t.Errorf("expected error, got %v", err)
+		t.Errorf("expected 'the value is not an integer/float' error, got %v", err)
 	}
 }
