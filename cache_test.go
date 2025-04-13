@@ -135,12 +135,46 @@ func TestCache_IncrementNonExistentKey(t *testing.T) {
 	}
 }
 
-func TestCache_IncrementNotInt(t *testing.T) {
+func TestCache_IncrementNonIntData(t *testing.T) {
 	cache := New(0, 0)
 
 	cache.Set("key1", "value1", 0)
 	err := cache.Increment("key1", int64(10))
 	if err == nil || err.Error() != "the value is not an integer/float" {
-		t.Errorf("expected 'the value is not an integer/float' error, got %v", err)
+		t.Errorf("expected error, got %v", err)
+	}
+}
+
+func TestCache_Decrement(t *testing.T) {
+	cache := New(0, 0)
+
+	cache.Set("key1", int64(10), 0)
+	err := cache.Decrement("key1", 5)
+	if err != nil {
+		t.Errorf("Expected no error, got %v", err)
+	}
+
+	val, _ := cache.GetItem("key1")
+	if val != int64(5) {
+		t.Errorf("Expected value 5, got %v", val)
+	}
+}
+
+func TestCache_DecrementNonExistentKey(t *testing.T) {
+	cache := New(0, 0)
+
+	err := cache.Decrement("non-existent", int64(5))
+	if err == nil || err.Error() != "element to increment not found" {
+		t.Errorf("expected 'element to increment not found' error, got %v", err)
+	}
+}
+
+func TestCache_DecementNonIntData(t *testing.T) {
+	cache := New(0, 0)
+
+	cache.Set("key1", "value1", 0)
+	err := cache.Decrement("key1", int64(10))
+	if err == nil || err.Error() != "the value is not an integer/float" {
+		t.Errorf("expected error, got %v", err)
 	}
 }
