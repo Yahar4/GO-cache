@@ -164,8 +164,8 @@ func TestCache_DecrementNonExistentKey(t *testing.T) {
 	cache := New(0, 0)
 
 	err := cache.Decrement("non-existent", int64(5))
-	if err == nil || err.Error() != "element to increment not found" {
-		t.Errorf("expected 'element to increment not found' error, got %v", err)
+	if err == nil || err.Error() != "element to decrement not found" {
+		t.Errorf("expected 'element to decrement not found' error, got %v", err)
 	}
 }
 
